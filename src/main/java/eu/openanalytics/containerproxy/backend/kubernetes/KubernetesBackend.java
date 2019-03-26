@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -119,6 +120,8 @@ public class KubernetesBackend extends AbstractContainerBackend {
 		Container container = new Container();
 		container.setSpec(spec);
 		container.setId(UUID.randomUUID().toString());
+
+		Map<String, String> settings = spec.getSettings();
 		
 		String kubeNamespace = getProperty(PROPERTY_NAMESPACE, DEFAULT_NAMESPACE);
 		String apiVersion = getProperty(PROPERTY_API_VERSION, DEFAULT_API_VERSION);
@@ -142,19 +145,19 @@ public class KubernetesBackend extends AbstractContainerBackend {
 		}
 
   		ResourceRequirementsBuilder resourceRequirementsBuilder = new ResourceRequirementsBuilder();
- 		String request_cpu = getProperty(PROPERTY_CONTAINER_REQUEST_CPU);
+ 		String request_cpu = settings.get(PROPERTY_CONTAINER_REQUEST_CPU);
  		if (request_cpu != null) {
  			resourceRequirementsBuilder.addToRequests("cpu", new QuantityBuilder().withAmount(request_cpu).build());
  		}
- 		String limit_cpu = getProperty(PROPERTY_CONTAINER_LIMIT_CPU);
+ 		String limit_cpu = settings.get(PROPERTY_CONTAINER_LIMIT_CPU);
  		if (limit_cpu != null) {
  			resourceRequirementsBuilder.addToLimits("cpu", new QuantityBuilder().withAmount(limit_cpu).build());
  		}
- 		String request_memory = getProperty(PROPERTY_CONTAINER_REQUEST_MEMORY);
+ 		String request_memory = settings.get(PROPERTY_CONTAINER_REQUEST_MEMORY);
  		if (request_memory != null) {
  			resourceRequirementsBuilder.addToRequests("memory", new QuantityBuilder().withAmount(request_memory).build());
  		}
- 		String limit_memory = getProperty(PROPERTY_CONTAINER_LIMIT_MEMORY);
+ 		String limit_memory = settings.get(PROPERTY_CONTAINER_LIMIT_MEMORY);
  		if (limit_memory != null) {
  			resourceRequirementsBuilder.addToLimits("memory", new QuantityBuilder().withAmount(limit_memory).build());
  		}
