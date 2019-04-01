@@ -84,7 +84,7 @@ public class KubernetesBackend extends AbstractContainerBackend {
  	private static final String PROPERTY_CONTAINER_LIMIT_CPU = "cpu-limit";
  	private static final String PROPERTY_CONTAINER_REQUEST_MEMORY = "memory-request";
  	private static final String PROPERTY_CONTAINER_LIMIT_MEMORY = "memory-limit";
-	
+
 	private static final String DEFAULT_NAMESPACE = "default";
 	private static final String DEFAULT_API_VERSION = "v1";
 	
@@ -122,7 +122,7 @@ public class KubernetesBackend extends AbstractContainerBackend {
 		container.setId(UUID.randomUUID().toString());
 
 		Map<String, String> settings = spec.getSettings();
-		
+
 		String kubeNamespace = getProperty(PROPERTY_NAMESPACE, DEFAULT_NAMESPACE);
 		String apiVersion = getProperty(PROPERTY_API_VERSION, DEFAULT_API_VERSION);
 		
